@@ -80,12 +80,12 @@ function NotesContent() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="flex-1 p-8 max-w-6xl mx-auto w-full"
+      className="flex-1 p-4 md:p-8 max-w-6xl mx-auto w-full"
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-1 tracking-tight">{pageTitle}</h1>
-          <p className="text-muted-foreground">Manage and search your documents.</p>
+          <p className="text-muted-foreground text-sm md:text-base">Manage and search your documents.</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="relative w-full md:w-64">
@@ -97,7 +97,7 @@ function NotesContent() {
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <Button variant="outline" size="icon" className="shrink-0 text-muted-foreground border-border">
+          <Button variant="outline" size="icon" className="shrink-0 text-muted-foreground border-border hidden sm:flex">
             <Filter className="w-4 h-4" />
           </Button>
           <div className="border border-border rounded-md flex shrink-0 bg-secondary/30 p-0.5">
@@ -122,7 +122,7 @@ function NotesContent() {
       </div>
 
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {[1,2,3,4,5,6,7,8].map(i => <Skeleton key={i} className="h-48 w-full rounded-xl" />)}
         </div>
       ) : filteredNotes.length === 0 ? (
@@ -130,7 +130,7 @@ function NotesContent() {
             No notes found.
         </div>
       ) : view === 'grid' ? (
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           <AnimatePresence>
             {filteredNotes.map((note: any) => (
               <motion.div
@@ -165,32 +165,32 @@ function NotesContent() {
           </AnimatePresence>
         </motion.div>
       ) : (
-        <div className="rounded-xl border border-border bg-card overflow-hidden">
-          <table className="w-full text-sm text-left">
+        <div className="rounded-xl border border-border bg-card overflow-hidden w-full overflow-x-auto">
+          <table className="w-full text-sm text-left min-w-[600px]">
             <thead className="text-xs text-muted-foreground bg-secondary/30 uppercase">
               <tr>
-                <th className="px-6 py-4 font-medium">Title</th>
-                <th className="px-6 py-4 font-medium hidden md:table-cell">Folder</th>
-                <th className="px-6 py-4 font-medium hidden sm:table-cell">Last Edited</th>
-                <th className="px-6 py-4 font-medium text-right">Actions</th>
+                <th className="px-4 md:px-6 py-4 font-medium">Title</th>
+                <th className="px-4 md:px-6 py-4 font-medium">Folder</th>
+                <th className="px-4 md:px-6 py-4 font-medium">Last Edited</th>
+                <th className="px-4 md:px-6 py-4 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
               {filteredNotes.map((note: any) => (
                 <tr key={note.id} className="hover:bg-secondary/10 transition-colors group">
-                  <td className="px-6 py-4">
-                    <Link href={`/notes/${note.id}`} className="font-medium text-foreground hover:text-primary transition-colors block">
+                  <td className="px-4 md:px-6 py-4">
+                    <Link href={`/notes/${note.id}`} className="font-medium text-foreground hover:text-primary transition-colors block whitespace-nowrap">
                       {note.title}
                     </Link>
                   </td>
-                  <td className="px-6 py-4 text-muted-foreground hidden md:table-cell">
-                    <div className="flex items-center gap-1.5">
+                  <td className="px-4 md:px-6 py-4 text-muted-foreground">
+                    <div className="flex items-center gap-1.5 whitespace-nowrap">
                       <Folder className="w-3.5 h-3.5" />
                       {note.folder || "Personal"}
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-muted-foreground hidden sm:table-cell">{new Date(note.updated_at).toLocaleDateString()}</td>
-                  <td className="px-6 py-4 text-right">
+                  <td className="px-4 md:px-6 py-4 text-muted-foreground whitespace-nowrap">{new Date(note.updated_at).toLocaleDateString()}</td>
+                  <td className="px-4 md:px-6 py-4 text-right">
                     <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
                       <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
                     </Button>
@@ -207,7 +207,7 @@ function NotesContent() {
 
 export default function AllNotesPage() {
     return (
-        <Suspense fallback={<div className="flex-1 p-8" />}>
+        <Suspense fallback={<div className="flex-1 p-4 md:p-8" />}>
             <NotesContent />
         </Suspense>
     );

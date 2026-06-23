@@ -62,7 +62,7 @@ export function TiptapEditor({
   return (
     <div className="relative min-h-[500px] flex flex-col gap-4">
       {editor && (
-        <div className="flex bg-card border border-border shadow-sm rounded-md overflow-hidden max-w-fit sticky top-0 z-10">
+        <div className="flex bg-card border border-border shadow-sm rounded-md overflow-x-auto max-w-full sticky top-0 z-10 scrollbar-hide">
           <button
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={`p-2 hover:bg-secondary transition-colors ${editor.isActive('bold') ? 'bg-secondary text-primary' : 'text-muted-foreground'}`}
